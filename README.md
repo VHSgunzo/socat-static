@@ -1,18 +1,17 @@
-# socat-static
-* Statically compiled socat with musl
-## To get started:
-* **Download the latest revision**
-```
-git clone https://github.com/VHSgunzo/socat-static.git
-```
-* **Build**
-```
-cd socat-static
-docker build -t socat-static .
+# [socat-static](https://github.com/VHSgunzo/socat-static/releases/latest)
 
-docker run -v $PWD:/output --rm socat-static
-# OR without OpenSSL:
-docker run -e NO_OPENSSL=1 -v $PWD:/output --rm socat-static
+* Statically compiled [socat](http://www.dest-unreach.org/socat/), a Multipurpose relay tool for use in [runimage](https://github.com/VHSgunzo/runimage)
+* Check [Releases](https://github.com/VHSgunzo/socat-static/releases/latest) for `x86_64-Linux` & `aarch64-Linux` PreCompiled Binaries: https://github.com/VHSgunzo/socat-static/releases/latest
+- #### To Build it on your Own:
+```bash
+!#The script assumes Ubuntu with sudo installed (preferably configured as passwordless sudo) 
+git clone --filter="blob:none" "https://github.com/VHSgunzo/socat-static.git"
+cd "./socat-static" && chmod +x "./build_on_nix.sh" && "./build_on_nix.sh"
 
-docker image rm socat-static
+!# If you don't have Ubuntu, It is also possible to build this on a Ubuntu-Chroot or Docker
+!# But you may run into: error: unable to load seccomp BPF program: Invalid argument
+!# To fix this:
+sed 's/bash -s -- install linux --init none --no-confirm/bash -s -- install linux --init none --extra-conf "filter-syscalls = false" --no-confirm/g' -i "./build_on_nix.sh"
+!# And then re-run the script
+!# More Details: https://github.com/DeterminateSystems/nix-installer/issues/324
 ```
