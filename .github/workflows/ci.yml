@@ -23,7 +23,7 @@ jobs:
           docker run -e NO_OPENSSL=1 -v "$PWD":/output --rm socat-static;
 
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: socat-*.tar.xz
